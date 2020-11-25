@@ -37,7 +37,7 @@ err() {
 KERNEL_DIR=$PWD
 
 # Kernel Version
-VERSION="4.3"
+VERSION="4.4"
 
 # Sign Kernel or not
 SIGN=1
