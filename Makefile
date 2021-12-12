@@ -514,7 +514,7 @@ CLANG_FLAGS	+= $(call cc-option, -Wno-unsequenced)
 KBUILD_CFLAGS	+= $(CLANG_FLAGS)
 KBUILD_AFLAGS	+= $(CLANG_FLAGS)
 export CLANG_FLAGS
-ifeq ($(ld-name),lld)
+ifeq ($(ld-name),ld.lld)
 KBUILD_CFLAGS += -fuse-ld=lld
 endif
 KBUILD_CPPFLAGS += -Qunused-arguments
@@ -667,7 +667,7 @@ export CFLAGS_GCOV
 # Make toolchain changes before including arch/$(SRCARCH)/Makefile to ensure
 # ar/cc/ld-* macros return correct values.
 ifdef CONFIG_LTO_CLANG
-ifneq ($(ld-name),lld)
+ifneq ($(ld-name),ld.lld)
 # use GNU gold with LLVMgold for LTO linking, and LD for vmlinux_link
 LDFINAL_vmlinux := $(LD)
 LD		:= $(LDGOLD)
@@ -791,7 +791,7 @@ KBUILD_CFLAGS += $(call cc-option,-fno-delete-null-pointer-checks,)
 # Use make W=1 to enable them (see scripts/Makefile.extrawarn)
 KBUILD_CFLAGS += $(call cc-disable-warning, unused-but-set-variable)
 
-ifeq ($(ld-name),lld)
+ifeq ($(ld-name),ld.lld)
 LDFLAGS += -O2
 endif
 
@@ -1299,7 +1299,7 @@ ifdef CONFIG_LTO_CLANG
   ifneq ($(call clang-ifversion, -ge, 0500, y), y)
 	@echo Cannot use CONFIG_LTO_CLANG: requires clang 5.0 or later >&2 && exit 1
   endif
-  ifneq ($(ld-name),lld)
+  ifneq ($(ld-name),ld.lld)
     ifneq ($(call gold-ifversion, -ge, 112000000, y), y)
          @echo Cannot use CONFIG_LTO_CLANG: requires GNU gold 1.12 or later >&2 && exit 1
     endif
