@@ -136,7 +136,6 @@ Android.bp
 #
 clang
 kranul.sh
-AnyKernel3
 build.log
 scripts/ufdt/
 out
