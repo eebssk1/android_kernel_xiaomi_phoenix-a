@@ -712,9 +712,9 @@ KBUILD_CFLAGS	+= -mllvm -polly \
 		   -mllvm -polly-opt-fusion=max \
 		   -mllvm -polly-ast-use-context \
 		   -mllvm -polly-vectorizer=stripmine \
-		   -mllvm -polly-prevect-width=12 \
+		   -mllvm -polly-prevect-width=8 \
 		   -mllvm -polly-invariant-load-hoisting \
-		   -funroll-loops
+		   -freroll-loops
 endif
 endif
 endif
