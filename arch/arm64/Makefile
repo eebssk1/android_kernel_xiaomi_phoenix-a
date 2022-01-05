@@ -11,6 +11,8 @@
 # Copyright (C) 1995-2001 by Russell King
 
 LDFLAGS_vmlinux	:=--no-undefined -X -z norelro
+LDFLAGS_vmlinux += $(call ld-option,--relax)
+LDFLAGS_vmlinux += -O2
 CPPFLAGS_vmlinux.lds = -DTEXT_OFFSET=$(TEXT_OFFSET)
 GZFLAGS		:=-9
 
