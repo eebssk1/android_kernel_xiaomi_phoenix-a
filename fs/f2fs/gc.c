@@ -204,9 +204,9 @@ int f2fs_start_gc_thread(struct f2fs_sb_info *sbi)
 		kvfree(gc_th);
 		sbi->gc_thread = NULL;
 	}
-	sched_setscheduler(sbi->gc_thread->f2fs_gc_task, SCHED_IDLE, &param);
+	sched_setscheduler(sbi->gc_thread->f2fs_gc_task, SCHED_BATCH, &param);
 	set_task_ioprio(sbi->gc_thread->f2fs_gc_task,
-			IOPRIO_PRIO_VALUE(IOPRIO_CLASS_IDLE, 0));
+			IOPRIO_PRIO_VALUE(IOPRIO_CLASS_BE, 6));
 out:
 	return err;
 }
