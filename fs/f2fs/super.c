@@ -424,6 +424,7 @@ static int parse_options(struct super_block *sb, char *options)
 
 		switch (token) {
 		case Opt_gc_background:
+			f2fs_info(sbi, "changing gc mode not supported in favor of Rapid GC");
 			break;
 		case Opt_disable_roll_forward:
 			set_opt(sbi, DISABLE_ROLL_FORWARD);
