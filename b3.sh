@@ -2,10 +2,10 @@
 
 sudo apt-get install -y libelf-dev libssl-dev dwarves bc jitterentropy-rngd schedtool device-tree-compiler curl
 
-curl -L "https://developer.arm.com/-/media/Files/downloads/gnu-a/10.3-2021.07/binrel/gcc-arm-10.3-2021.07-x86_64-arm-none-linux-gnueabihf.tar.xz" | tar -xf - --xz
-curl -L "https://developer.arm.com/-/media/Files/downloads/gnu-a/10.3-2021.07/binrel/gcc-arm-10.3-2021.07-x86_64-aarch64-none-linux-gnu.tar.xz" | tar -xf - --xz
+curl -L "https://developer.arm.com/-/media/Files/downloads/gnu/11.2-2022.02/binrel/gcc-arm-11.2-2022.02-x86_64-aarch64-none-linux-gnu.tar.xz" | tar -xf - --xz
+curl -L "https://developer.arm.com/-/media/Files/downloads/gnu/11.2-2022.02/binrel/gcc-arm-11.2-2022.02-x86_64-arm-none-linux-gnueabihf.tar.xz" | tar -xf - --xz
 
-export PATH=${PWD}/gcc-arm-10.3-2021.07-x86_64-aarch64-none-linux-gnu/bin:${PWD}/gcc-arm-10.3-2021.07-x86_64-arm-none-linux-gnueabihf/bin:$PATH
+export PATH=${PWD}/gcc-arm-11.2-2022.02-x86_64-aarch64-none-linux-gnu/bin:${PWD}/gcc-arm-11.2-2022.02-x86_64-arm-none-linux-gnueabihf/bin:$PATH
 
 mkdir out
 
