@@ -8,6 +8,9 @@ ccflags-y += -Idrivers/media/platform/msm/sde/rotator
 ccflags-y += -Idrivers/gpu/drm/msm/hdmi
 ccflags-$(CONFIG_DRM_SDE_SHD) += -Idrivers/gpu/drm/msm/shd
 ccflags-$(CONFIG_DRM_SDE_SHP) += -Idrivers/gpu/drm/msm/shp
+ifndef CONFIG_DEBUG_INFO
+ccflags-y += -DPR_INFO_IS_NOP
+endif
 
 msm_drm-y := \
 	dp/dp_usbpd.o \
