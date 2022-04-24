@@ -309,8 +309,13 @@ extern asmlinkage void dump_stack(void) __cold;
 #define pr_warn pr_warning
 #define pr_notice(fmt, ...) \
 	printk(KERN_NOTICE pr_fmt(fmt), ##__VA_ARGS__)
+#ifndef PR_INFO_IS_NOP
 #define pr_info(fmt, ...) \
 	printk(KERN_INFO pr_fmt(fmt), ##__VA_ARGS__)
+#else
+#define pr_info(fmt, ...)
+#endif
+
 /*
  * Like KERN_CONT, pr_cont() should only be used when continuing
  * a line with no newline ('\n') enclosed. Otherwise it defaults
