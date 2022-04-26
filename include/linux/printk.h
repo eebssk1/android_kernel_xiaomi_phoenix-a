@@ -313,8 +313,7 @@ extern asmlinkage void dump_stack(void) __cold;
 #define pr_info(fmt, ...) \
 	printk(KERN_INFO pr_fmt(fmt), ##__VA_ARGS__)
 #else
-#define pr_info(fmt, ...) \
-	asm("nop")
+#define pr_info(fmt, ...)
 #endif
 
 /*
