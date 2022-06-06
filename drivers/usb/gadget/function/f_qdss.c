@@ -414,7 +414,6 @@ static int qdss_bind(struct usb_configuration *c, struct usb_function *f)
 	pr_debug("%s\n", __func__);
 
 	qdss->gadget = gadget;
-	qdss_log("%s: channel name = %s\n", __func__, qdss->ch.name);
 
 	/* Allocate data I/F */
 	iface = usb_interface_id(c, f);
