@@ -2382,11 +2382,18 @@ int drm_mode_atomic_ioctl(struct drm_device *dev, void *data,
 	 * take too long to finish running the ioctl whenever the ioctl runs a
 	 * command that sleeps, such as for an "atomic" commit.
 	 */
-	struct pm_qos_request req = {
-		.type = PM_QOS_REQ_AFFINE_CORES,
-		.cpus_affine = ATOMIC_INIT(BIT(raw_smp_processor_id()))
-	};
+
+	typedef struct curcpu {
+	     int  id;
+	} curcpu;
+
 	int ret;
+	cpumask_t mask;
+	curcpu cpu  = ATOMIC_INIT(raw_smp_processor_id());
+	struct pm_qos_request req = { .type = PM_QOS_REQ_AFFINE_CORES };
+
+	cpumask_set_cpu(cpu.id, &mask);
+	req.cpus_affine = mask;
 
 	pm_qos_add_request(&req, PM_QOS_CPU_DMA_LATENCY, 100);
 	ret = __drm_mode_atomic_ioctl(dev, data, file_priv);

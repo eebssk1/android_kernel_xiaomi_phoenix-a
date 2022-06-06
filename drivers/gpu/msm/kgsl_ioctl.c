@@ -205,11 +205,18 @@ long kgsl_ioctl(struct file *filep, unsigned int cmd, unsigned long arg)
 	 * take too long to finish running the ioctl whenever the ioctl runs a
 	 * command that sleeps, such as for memory allocation.
 	 */
-	struct pm_qos_request req = {
-		.type = PM_QOS_REQ_AFFINE_CORES,
-		.cpus_affine = ATOMIC_INIT(BIT(raw_smp_processor_id()))
-	};
+
+	typedef struct curcpu {
+	    int id;
+	} curcpu;
+
 	long ret;
+	cpumask_t mask;
+	struct pm_qos_request req = { .type = PM_QOS_REQ_AFFINE_CORES };
+	curcpu cpu = ATOMIC_INIT(raw_smp_processor_id());
+
+	cpumask_set_cpu(cpu.id, &mask);
+	req.cpus_affine = mask;
 
 	pm_qos_add_request(&req, PM_QOS_CPU_DMA_LATENCY, 100);
 	ret = __kgsl_ioctl(filep, cmd, arg);
