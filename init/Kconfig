@@ -690,6 +690,9 @@ choice
 config PELT_UTIL_HALFLIFE_32
 	bool "32 ms, default for server"
 
+config PELT_UTIL_HALFLIFE_24
+	bool "24 ms, slightly faster"
+
 config PELT_UTIL_HALFLIFE_16
 	bool "16 ms, suggested for interactive workloads"
 	help
