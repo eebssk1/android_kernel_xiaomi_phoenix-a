@@ -252,6 +252,8 @@ int ion_heap_init_deferred_free(struct ion_heap *heap)
 {
 #ifndef CONFIG_ION_DEFER_FREE_NO_SCHED_IDLE
 	struct sched_param param = { .sched_priority = 0 };
+#else
+	struct sched_param param = { .sched_priority = 5 };
 #endif
 	INIT_LIST_HEAD(&heap->free_list);
 	init_waitqueue_head(&heap->waitqueue);
@@ -264,6 +266,8 @@ int ion_heap_init_deferred_free(struct ion_heap *heap)
 	}
 #ifndef CONFIG_ION_DEFER_FREE_NO_SCHED_IDLE
 	sched_setscheduler(heap->task, SCHED_IDLE, &param);
+#else
+	sched_setscheduler(heap->task, SCHED_RR, &param);
 #endif
 	return 0;
 }
