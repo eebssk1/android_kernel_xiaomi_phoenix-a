@@ -79,7 +79,9 @@ void dwc3_drd_exit(struct dwc3 *dwc)
 	extcon_unregister_notifier(dwc->edev, EXTCON_USB_HOST,
 				   &dwc->edev_nb);
 
+	if(dwc->drd_work.func) {
 	dwc3_set_mode(dwc, DWC3_GCTL_PRTCAP_DEVICE);
 	flush_work(&dwc->drd_work);
+	}
 	dwc3_gadget_exit(dwc);
 }
