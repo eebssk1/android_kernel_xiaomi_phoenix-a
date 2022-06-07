@@ -23,3 +23,8 @@ schedtool -B -e make qcom/phoenix-sdmmagpie.dtb -j3 O=out
 cp out/arch/arm64/boot/Image.gz AnyKernel3/zImage
 cp out/arch/arm64/boot/dts/qcom/phoenix-sdmmagpie.dtb AnyKernel3/dtb
 cp out/arch/arm64/boot/dtbo.img AnyKernel3/dtbo.img
+
+if [ ! -e out/arch/arm64/boot/Image.gz ]
+then
+exit -1
+fi
