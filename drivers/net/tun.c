@@ -2791,7 +2791,7 @@ static int tun_get_link_ksettings(struct net_device *dev,
 {
 	ethtool_link_ksettings_zero_link_mode(cmd, supported);
 	ethtool_link_ksettings_zero_link_mode(cmd, advertising);
-	cmd->base.speed		= SPEED_10;
+	cmd->base.speed		= SPEED_1000;
 	cmd->base.duplex	= DUPLEX_FULL;
 	cmd->base.port		= PORT_TP;
 	cmd->base.phy_address	= 0;
