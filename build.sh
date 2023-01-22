@@ -1,6 +1,6 @@
 #!/bin/sh
 
-sudo apt-get install -y libelf-dev libssl-dev dwarves bc jitterentropy-rngd schedtool device-tree-compiler curl
+sudo apt-get install -y libelf-dev libssl-dev dwarves bc jitterentropy-rngd device-tree-compiler curl python2
 
 curl -L "https://developer.arm.com/-/media/Files/downloads/gnu/12.2.rel1/binrel/arm-gnu-toolchain-12.2.rel1-x86_64-aarch64-none-linux-gnu.tar.xz?rev=6750d007ffbf4134b30ea58ea5bf5223&hash=6C7D2A7C9BD409C42077F203DF120385AEEBB3F5" | tar -xf - --xz
 curl -L "https://developer.arm.com/-/media/Files/downloads/gnu/12.2.rel1/binrel/arm-gnu-toolchain-12.2.rel1-x86_64-arm-none-linux-gnueabihf.tar.xz?rev=9929cb6c0e8948f0ba1a621167fcd56d&hash=1259035C716B41C675DCA7D76913684B5AD8C239" | tar -xf - --xz
@@ -17,8 +17,8 @@ export XXYH="-fgcse-las -fgcse-sm -fipa-pta -flimit-function-alignment -fsched-s
 export KCFLAGS="-fgraphite -fgraphite-identity ${XXYH}"
 
 make vendor/phoenix_defconfig O=out
-schedtool -B -e make -j3 O=out
-schedtool -B -e make qcom/phoenix-sdmmagpie.dtb -j3 O=out
+make -j3 O=out
+make qcom/phoenix-sdmmagpie.dtb -j3 O=out
 
 cp out/arch/arm64/boot/Image.gz AnyKernel3/zImage
 cp out/arch/arm64/boot/dts/qcom/phoenix-sdmmagpie.dtb AnyKernel3/dtb
@@ -26,5 +26,5 @@ cp out/arch/arm64/boot/dtbo.img AnyKernel3/dtbo.img
 
 if [ ! -e out/arch/arm64/boot/Image.gz ]
 then
-exit -1
+exit 1
 fi
