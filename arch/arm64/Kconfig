@@ -541,7 +541,6 @@ config ARM64_ERRATUM_1024718
 
 	  If unsure, say Y.
 
-<<<<<<< HEAD
 config ARM64_ERRATUM_1286807
 	bool "Cortex-A76: Modification of the translation table for a virtual address might lead to read-after-read ordering violation"
 	default n
@@ -1080,7 +1079,6 @@ config ARM64_SSBD
 
 	  If unsure, say Y.
 
-<<<<<<< HEAD
 config ARM64_TAGGED_ADDR_ABI
 	bool "Enable the tagged user addresses syscall ABI"
 	default y
@@ -1089,7 +1087,7 @@ config ARM64_TAGGED_ADDR_ABI
 	  relaxed ABI via prctl() allowing tagged addresses to be passed
 	  to system calls as pointer arguments. For details, see
 	  Documentation/arm64/tagged-address-abi.rst.
-=======
+
 config MITIGATE_SPECTRE_BRANCH_HISTORY
 	bool "Mitigate Spectre style attacks against branch history" if EXPERT
 	default y
@@ -1099,7 +1097,6 @@ config MITIGATE_SPECTRE_BRANCH_HISTORY
 	  make use of branch history to influence future speculation.
 	  When taking an exception from user-space, a sequence of branches
 	  or a firmware call overwrites the branch history.
->>>>>>> 1e2df294aa3649e5fd6dd5e9b9d8c41c6656c350
 
 menuconfig ARMV8_DEPRECATED
 	bool "Emulate deprecated/obsolete ARMv8 instructions"
