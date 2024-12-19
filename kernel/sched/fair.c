@@ -11673,7 +11673,7 @@ static int idle_balance(struct rq *this_rq, struct rq_flags *rf)
 			!is_asym_cap_cpu(this_cpu))
 			avg_idle = this_rq->avg_idle;
 
-		if (avg_idle < curr_cost + sd->max_newidle_lb_cost) {
+		if (avg_idle * 4 / 5 < curr_cost + sd->max_newidle_lb_cost) {
 			update_next_balance(sd, &next_balance);
 			break;
 		}

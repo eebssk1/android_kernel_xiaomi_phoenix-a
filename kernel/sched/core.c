@@ -5260,6 +5260,8 @@ SYSCALL_DEFINE3(sched_getaffinity, pid_t, pid, unsigned int, len,
 	return ret;
 }
 
+static DEFINE_PER_CPU(unsigned long, last_yield);
+
 /**
  * sys_sched_yield - yield the current processor to other threads.
  *
@@ -5272,6 +5274,16 @@ SYSCALL_DEFINE0(sched_yield)
 {
 	struct rq_flags rf;
 	struct rq *rq;
+
+	unsigned long l_yield = this_cpu_read(last_yield);
+	unsigned long cur_jif;
+
+	cond_resched();
+	cur_jif = READ_ONCE(jiffies);
+	if (unlikely(!time_after(cur_jif, l_yield)))
+		if(likely(!(l_yield >= HZ/2 && cur_jif <= l_yield - (HZ/2))))
+			return 0;
+	this_cpu_write(last_yield, cur_jif);
 
 	rq = this_rq_lock_irq(&rf);
 

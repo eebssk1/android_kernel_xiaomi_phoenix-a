@@ -1110,6 +1110,8 @@ static int load_elf_binary(struct linux_binprm *bprm)
 		goto out;
 	/* N.B. passed_fileno might not be initialized? */
 	current->mm->end_code = end_code;
+	if (start_code >= ELF_ET_DYN_BASE)
+		current->mm->mmap_base = start_code;
 	current->mm->start_code = start_code;
 	current->mm->start_data = start_data;
 	current->mm->end_data = end_data;

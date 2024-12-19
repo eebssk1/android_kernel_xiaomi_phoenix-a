@@ -18,7 +18,9 @@ jobs:
   build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
-
+    defaults:
+      run:
+        shell: bash -el {0}
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -27,11 +29,15 @@ jobs:
             fetch-depth: 1
 
       # Runs a set of commands using the runners shell
+      - uses: conda-incubator/setup-miniconda@v3
+        with:
+          auto-update-conda: true
+          python-version: 2.7
       - name: Build
         run: |
              ./build.sh
       - name: flashble zip
-        uses: actions/upload-artifact@v2.3.0
+        uses: actions/upload-artifact@v4
         with:
             name: flashable
             path: AnyKernel3/*
