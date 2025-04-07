@@ -43,7 +43,7 @@ struct westwood {
 };
 
 /* TCP Westwood functions and constants */
-#define TCP_WESTWOOD_RTT_MIN   (HZ/20)	/* 50ms */
+#define TCP_WESTWOOD_RTT_MIN   (HZ/32)	/* 50ms */
 #define TCP_WESTWOOD_INIT_RTT  (20*HZ)	/* maybe too conservative?! */
 
 /*
@@ -218,7 +218,7 @@ static u32 tcp_westwood_bw_rttmin(const struct sock *sk)
 	const struct tcp_sock *tp = tcp_sk(sk);
 	const struct westwood *w = inet_csk_ca(sk);
 
-	return max_t(u32, (w->bw_est * w->rtt_min) / tp->mss_cache, 2);
+	return max_t(u32, ((w->bw_est * w->rtt_min) / tp->mss_cache) * 7 / 5, 2);
 }
 
 static void tcp_westwood_ack(struct sock *sk, u32 ack_flags)

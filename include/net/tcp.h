@@ -122,7 +122,7 @@ void tcp_time_wait(struct sock *sk, int state, int timeo);
 				 * initial RTO.
 				 */
 
-#define TCP_TIMEWAIT_LEN (56*HZ) /* how long to wait to destroy TIME-WAIT
+#define TCP_TIMEWAIT_LEN (58*HZ) /* how long to wait to destroy TIME-WAIT
 				  * state, about 60 seconds	*/
 #define TCP_FIN_TIMEOUT	TCP_TIMEWAIT_LEN
                                  /* BSD style FIN_WAIT2 deadlock breaker.
@@ -131,19 +131,19 @@ void tcp_time_wait(struct sock *sk, int state, int timeo);
 				  * TIME-WAIT timer.
 				  */
 
-#define TCP_DELACK_MAX	((unsigned)(HZ/25*4))	/* maximal time to delay before sending an ACK */
+#define TCP_DELACK_MAX	((unsigned)(HZ/9*2))	/* maximal time to delay before sending an ACK */
 #if HZ >= 100
-#define TCP_DELACK_MIN	((unsigned)(HZ/40))	/* minimal time to delay before sending an ACK */
-#define TCP_ATO_MIN	((unsigned)(HZ/40))
+#define TCP_DELACK_MIN	((unsigned)(HZ/30))	/* minimal time to delay before sending an ACK */
+#define TCP_ATO_MIN	((unsigned)(HZ/30))
 #else
 #define TCP_DELACK_MIN	4U
 #define TCP_ATO_MIN	4U
 #endif
-#define TCP_RTO_MAX	((unsigned)(100*HZ))
-#define TCP_RTO_MIN	((unsigned)(HZ/25*4))
+#define TCP_RTO_MAX	((unsigned)(108*HZ))
+#define TCP_RTO_MIN	((unsigned)(HZ/6))
 #define TCP_TIMEOUT_MIN	(2U) /* Min timeout for TCP timers in jiffies */
-#define TCP_TIMEOUT_INIT ((unsigned)(HZ*4/5))	/* RFC6298 2.1 initial RTO value	*/
-#define TCP_TIMEOUT_FALLBACK ((unsigned)(2*HZ))	/* RFC 1122 initial RTO value, now
+#define TCP_TIMEOUT_INIT ((unsigned)(HZ/3*2))	/* RFC6298 2.1 initial RTO value	*/
+#define TCP_TIMEOUT_FALLBACK ((unsigned)(HZ*12/5))	/* RFC 1122 initial RTO value, now
 						 * used as a fallback RTO for the
 						 * initial data transmission if no
 						 * valid RTT sample has been acquired,

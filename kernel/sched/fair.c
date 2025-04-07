@@ -229,7 +229,7 @@ static inline void update_load_set(struct load_weight *lw, unsigned long w)
  */
 static unsigned int get_update_sysctl_factor(void)
 {
-	unsigned int cpus = min_t(unsigned int, num_online_cpus(), 8);
+	unsigned int cpus = num_online_cpus();
 	unsigned int factor;
 
 	switch (sysctl_sched_tunable_scaling) {
@@ -3275,7 +3275,9 @@ __update_load_avg_cfs_rq(u64 now, int cpu, struct cfs_rq *cfs_rq)
  */
 static inline void update_tg_load_avg(struct cfs_rq *cfs_rq, int force)
 {
-	long delta = cfs_rq->avg.load_avg - cfs_rq->tg_load_avg_contrib;
+	long delta;
+	u64 now;
+
 
 	/*
 	 * No need to update load_avg for root_task_group as it is not used.
@@ -3283,9 +3285,19 @@ static inline void update_tg_load_avg(struct cfs_rq *cfs_rq, int force)
 	if (cfs_rq->tg == &root_task_group)
 		return;
 
+	/*
+	 * For migration heavy workloads, access to tg->load_avg can be
+	 * unbound. Limit the update rate to at most once per ms.
+	 */
+	now = sched_clock_cpu(cpu_of(rq_of(cfs_rq)));
+	if (now - cfs_rq->last_update_tg_load_avg < NSEC_PER_MSEC)
+		return;
+
+	delta = cfs_rq->avg.load_avg - cfs_rq->tg_load_avg_contrib;
 	if (force || abs(delta) > cfs_rq->tg_load_avg_contrib / 64) {
 		atomic_long_add(delta, &cfs_rq->tg->load_avg);
 		cfs_rq->tg_load_avg_contrib = cfs_rq->avg.load_avg;
+		cfs_rq->last_update_tg_load_avg = now;
 	}
 
 	trace_sched_load_tg(cfs_rq);
